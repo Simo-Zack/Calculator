@@ -15,91 +15,204 @@ numeri.forEach(num => {
     num.addEventListener("click", numero);
 });
 
+document.getElementById("cancella").addEventListener("click", elimina);
+
 function numero(e) {
     let num = e.target.innerText;
+
     if (calcolo.num1 === null) {
         let primo = document.createElement("span");
         primo.id = "primo";
         primo.innerText = num;
+
         display.appendChild(primo);
         calcolo.num1 = num;
-    } else if (calcolo.num1 !== null && calcolo.operazione === null) {
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione === null) {
         document.getElementById("primo").innerText += num;
+
         calcolo.num1 += num;
-    } else if (calcolo.operazione !== null && calcolo.num2 === null) {
+    }
+    else if (calcolo.operazione !== null && calcolo.num2 === null) {
         let secondo = document.createElement("span");
         secondo.id = "secondo";
         secondo.innerText = num;
+
         display.appendChild(secondo);
         calcolo.num2 = num;
-    } else {
+
+        document.getElementById("cancella").innerText = "C";
+        document.getElementById("cancella").removeEventListener("click", elimina);
+        document.getElementById("cancella").addEventListener("click", eliminaSecondo);
+    }
+    else {
         document.getElementById("secondo").innerText += num;
+
         calcolo.num2 += num;
     }
 }
 
 function operatore(e) {
     let op = e.target.innerText;
+
     if (calcolo.num1 === null) {
         return;
-    } else if (calcolo.num1 !== null && calcolo.operazione === null && calcolo.num2 === null) {
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione === null && calcolo.num2 === null) {
         let operaz = document.createElement("span");
         operaz.id = "operaz";
         operaz.innerText = op;
+
         display.appendChild(operaz);
         calcolo.operazione = op;
-    } else if (calcolo.num1 !== null && calcolo.operazione !== null && calcolo.num2 === null) {
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione !== null && calcolo.num2 === null) {
         document.getElementById("operaz").innerText = op;
+
         calcolo.operazione = op;
-    } /*else {
+    }
+    /*else {
         uguale();
+
         let operaz = document.createElement("span");
         operaz.id = "operaz";
         operaz.innerText = op;
+
         display.appendChild(operaz);
         calcolo.operazione = op;
+
+        document.getElementById("cancella").innerText = "AC";
+        document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+        document.getElementById("cancella").addEventListener("click", elimina);
     }*/
 }
 
 function cancella() {
     if (calcolo.num1 === null) {
         return;
-    } else if (calcolo.num !== null && calcolo.operazione === null) {
+    }
+    else if (calcolo.num !== null && calcolo.operazione === null) {
         let num = document.getElementById("primo").innerText;
+
         num = num.slice(0, -1);
+
         if (num.length === 0) {
             document.getElementById("primo").remove();
+
             calcolo.num1 = null;
-        } else {
+        }
+        else {
             document.getElementById("primo").innerText = num;
+
             calcolo.num1 = num;
         }
-    } else if (calcolo.operazione !== null && calcolo.num2 === null) {
+    }
+    else if (calcolo.operazione !== null && calcolo.num2 === null) {
         document.getElementById("operaz").remove();
+
         calcolo.operazione = null;
-    } else {
+    }
+    else {
         let num = document.getElementById("secondo").innerText;
+
         num = num.slice(0, -1);
+
         if (num.length === 0) {
             document.getElementById("secondo").remove();
+
             calcolo.num2 = null;
-        } else {
+
+            document.getElementById("cancella").innerText = "AC";
+            document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+            document.getElementById("cancella").addEventListener("click", elimina);
+        }
+        else {
             document.getElementById("secondo").innerText = num;
+
             calcolo.num2 = num;
         }
     }
 }
 
 function elimina() {
+    if (calcolo.num1 === null) {
+        return;
+    } else {
+        display.replaceChildren();
 
+        calcolo.num1 = null;
+        calcolo.operazione = null;
+    }
+}
+
+function eliminaSecondo() {
+    if (document.getElementById("secondo")) {
+        display.removeChild(document.getElementById("secondo"));
+    }
+
+    calcolo.num2 = null;
+
+    document.getElementById("cancella").innerText = "AC";
+    document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+    document.getElementById("cancella").addEventListener("click", elimina);
 }
 
 function percentuale() {
+    if (calcolo.num1 === null || (calcolo.operazione !== null && calcolo.num2 === null)) {
+        return;
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione === null) {
+        document.getElementById("primo").innerText += "%";
 
+        calcolo.num1 = `${calcolo.num1 / 100}`;
+    } else {
+        document.getElementById("secondo").innerText += "%";
+
+        calcolo.num2 = `${calcolo.num2 / 100}`;
+    }
 }
 
 function cambioSegno() {
+    if (calcolo.num1 === null || (calcolo.operazione !== null && calcolo.num2 === null)) {
+        return;
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione === null) {
+        if (+document.getElementById("primo").innerText > 0) {
+            document.getElementById("primo").innerText = `-${document.getElementById("primo").innerText}`;
 
+            calcolo.num1 = `${document.getElementById("primo").innerText * -1}`;
+        } else {
+            document.getElementById("primo").innerText = `${document.getElementById("primo").innerText * -1}`;
+
+            calcolo.num1 = `${document.getElementById("primo").innerText * -1}`;
+        }
+    } else {
+        if (calcolo.operazione === "+") {
+            document.getElementById("operaz").innerText = "-";
+
+            calcolo.operazione = "-";
+        }
+        else if (calcolo.operazione === "-") {
+            document.getElementById("operaz").innerText = "+";
+
+            calcolo.operazione = "+";
+        }
+        else {
+            if (+document.getElementById("secondo").innerText > 0) {
+                document.getElementById("secondo").innerText = `-${document.getElementById("secondo").innerText}`;
+
+                calcolo.num1 = `${document.getElementById("secondo").innerText * -1}`;
+            } else {
+                document.getElementById("secondo").innerText = `${document.getElementById("secondo").innerText * -1}`;
+
+                calcolo.num1 = `${document.getElementById("secondo").innerText * -1}`;
+            }
+        }
+    }
+}
+
+function virgola() {
+    
 }
 
 function uguale() {
