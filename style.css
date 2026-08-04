@@ -23,7 +23,7 @@ body {
     align-items: center;
     text-align: right;
     font-size: 1.5em;
-    overflow-x:auto;
+    overflow-x: auto;
 }
 
 #calcolatrice {
@@ -52,7 +52,8 @@ body {
     background-color: gray;
 }
 
-.operatore {
+.operatore,
+#uguale {
     background-color: rgb(255, 136, 0);
 }
 

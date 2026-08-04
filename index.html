@@ -6,8 +6,6 @@
     <title>Calcolatrice</title>
     <link rel="stylesheet" href="style.css">
 
-    <script src="script.js"></script>
-
 </head>
 
 <body>
@@ -16,9 +14,9 @@
 
         <table id="calcolatrice">
             <tr>
-                <td class="grigi">Elm</td>
-                <td class="grigi">AC</td>
-                <td class="grigi">%</td>
+                <td onclick="cancella()" class="grigi">⌫</td>
+                <td onclick="elimina()" class="grigi">AC</td>
+                <td onclick="percentuale()" class="grigi">%</td>
                 <td class="operatore">/</td>
             </tr>
             <tr>
@@ -43,10 +41,12 @@
                 <td class="nero">+/-</td>
                 <td class="nero">0</td>
                 <td class="nero">,</td>
-                <td class="operatore">=</td>
+                <td id="uguale">=</td>
             </tr>
         </table>
     </div>
+
+    <script src="script.js"></script>
 
 </body>
 
