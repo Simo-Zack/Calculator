@@ -20,10 +20,11 @@ body {
     height: 75px;
     color: white;
     display: grid;
-    align-items: center;
-    text-align: right;
     font-size: 1.5em;
     overflow-x: auto;
+    grid-auto-flow: column;
+    align-content: center;
+    justify-content: end;
 }
 
 #calcolatrice {
