@@ -16,6 +16,7 @@ numeri.forEach(num => {
 });
 
 document.getElementById("cancella").addEventListener("click", elimina);
+document.addEventListener("keydown", tastiera);
 
 function numero(e) {
     let num = e.target.innerText;
@@ -289,6 +290,95 @@ function uguale() {
             document.getElementById("cancella").innerText = "AC";
             document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
             document.getElementById("cancella").addEventListener("click", elimina);
+        }
+    }
+}
+
+function tastiera(e) {
+    let tasto = e.key;
+
+    if (tasto === "Backspace") {
+        cancella();
+    } else if (tasto === "Delete") {
+        if (calcolo.num2 === null) {
+            elimina();
+        } else {
+            eliminaSecondo()
+        }
+    } else if (tasto === "Enter") {
+        uguale();
+    }
+    else if (tasto === "+" || tasto === "-" || tasto === "*" || tasto === "/") {
+        if (calcolo.num1 === null) {
+            return;
+        }
+        else if (calcolo.num1 !== null && calcolo.operazione === null && calcolo.num2 === null) {
+            if (calcolo.num1.indexOf(",") === (calcolo.num1.length - 1)) {
+                return;
+            }
+            else {
+                let operaz = document.createElement("span");
+                operaz.id = "operaz";
+                operaz.innerText = tasto;
+
+                display.appendChild(operaz);
+                calcolo.operazione = tasto;
+            }
+        }
+        else if (calcolo.num1 !== null && calcolo.operazione !== null && calcolo.num2 === null) {
+            document.getElementById("operaz").innerText = tasto;
+
+            calcolo.operazione = tasto;
+        }
+        else {
+            if (calcolo.num2.indexOf(",") === (calcolo.num2.length - 1)) {
+                return;
+            }
+            else {
+                uguale();
+
+                let operaz = document.createElement("span");
+                operaz.id = "operaz";
+                operaz.innerText = tasto;
+
+                display.appendChild(operaz);
+                calcolo.operazione = tasto;
+
+                document.getElementById("cancella").innerText = "AC";
+                document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+                document.getElementById("cancella").addEventListener("click", elimina);
+            }
+        }
+    } else if (+tasto > -1 && +tasto < 10) {
+        if (calcolo.num1 === null) {
+            let primo = document.createElement("span");
+            primo.id = "primo";
+            primo.innerText = tasto;
+
+            display.appendChild(primo);
+            calcolo.num1 = tasto;
+        }
+        else if (calcolo.num1 !== null && calcolo.operazione === null) {
+            document.getElementById("primo").innerText += tasto;
+
+            calcolo.num1 += tasto;
+        }
+        else if (calcolo.operazione !== null && calcolo.num2 === null) {
+            let secondo = document.createElement("span");
+            secondo.id = "secondo";
+            secondo.innerText = tasto;
+
+            display.appendChild(secondo);
+            calcolo.num2 = tasto;
+
+            document.getElementById("cancella").innerText = "C";
+            document.getElementById("cancella").removeEventListener("click", elimina);
+            document.getElementById("cancella").addEventListener("click", eliminaSecondo);
+        }
+        else {
+            document.getElementById("secondo").innerText += tasto;
+
+            calcolo.num2 += tasto;
         }
     }
 }
