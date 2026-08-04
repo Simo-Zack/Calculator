@@ -59,6 +59,7 @@ body {
 }
 
 .nero,
-#segno {
+#segno,
+#virgola {
     background-color: rgb(49, 47, 47);
 }
