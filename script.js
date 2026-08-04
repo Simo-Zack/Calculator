@@ -1,11 +1,37 @@
-const elementi = document.querySelectorAll(".operatore");
-elementi.forEach(el => {
+const display = document.getElementById("display");
+
+
+
+const operatori = document.querySelectorAll(".operatore");
+operatori.forEach(el => {
     el.addEventListener("click", operatore);
 });
 
-const 
+const numeri = document.querySelectorAll(".nero");
+numeri.forEach(el => {
+    el.addEventListener("click", numero);
+});
 
 function operatore(e) {
-    let operazione = e.target.innerText;
-    document.getElementById("display").innerText = operazione;
+    
+}
+
+function numero(e) {
+
+}
+
+function cancella() {
+
+}
+
+function elimina() {
+
+}
+
+function percentuale() {
+
+}
+
+function uguale() {
+
 }

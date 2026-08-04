@@ -57,6 +57,7 @@ body {
     background-color: rgb(255, 136, 0);
 }
 
-.nero {
+.nero,
+#segno {
     background-color: rgb(49, 47, 47);
 }
