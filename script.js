@@ -227,19 +227,19 @@ function virgola() {
         return;
     }
     else if (calcolo.num1 !== null && calcolo.operazione === null) {
-        if (calcolo.num1.indexOf(",") === -1) {
-            document.getElementById("primo").innerText += ",";
+        if (calcolo.num1.indexOf(".") === -1) {
+            document.getElementById("primo").innerText += ".";
 
-            calcolo.num1 += ",";
+            calcolo.num1 += ".";
         }
         else {
             return;
         }
     } else {
-        if (calcolo.num2.indexOf(",") === -1) {
-            document.getElementById("secondo").innerText += ",";
+        if (calcolo.num2.indexOf(".") === -1) {
+            document.getElementById("secondo").innerText += ".";
 
-            calcolo.num2 += ",";
+            calcolo.num2 += ".";
         }
         else {
             return;
@@ -252,7 +252,7 @@ function uguale() {
         return;
     }
     else {
-        if (calcolo.num2.indexOf(",") === (calcolo.num2.length - 1)) {
+        if (calcolo.num2.indexOf(".") === (calcolo.num2.length - 1)) {
             return;
         }
         else {
@@ -307,6 +307,8 @@ function tastiera(e) {
         }
     } else if (tasto === "Enter") {
         uguale();
+    } else if (tasto === "." || tasto === ",") {
+        virgola();
     }
     else if (tasto === "+" || tasto === "-" || tasto === "*" || tasto === "/") {
         if (calcolo.num1 === null) {
