@@ -59,32 +59,42 @@ function operatore(e) {
         return;
     }
     else if (calcolo.num1 !== null && calcolo.operazione === null && calcolo.num2 === null) {
-        let operaz = document.createElement("span");
-        operaz.id = "operaz";
-        operaz.innerText = op;
+        if (calcolo.num1.indexOf(",") === (calcolo.num1.length - 1)) {
+            return;
+        }
+        else {
+            let operaz = document.createElement("span");
+            operaz.id = "operaz";
+            operaz.innerText = op;
 
-        display.appendChild(operaz);
-        calcolo.operazione = op;
+            display.appendChild(operaz);
+            calcolo.operazione = op;
+        }
     }
     else if (calcolo.num1 !== null && calcolo.operazione !== null && calcolo.num2 === null) {
         document.getElementById("operaz").innerText = op;
 
         calcolo.operazione = op;
     }
-    /*else {
-        uguale();
+    else {
+        if (calcolo.num2.indexOf(",") === (calcolo.num2.length - 1)) {
+            return;
+        }
+        else {
+            uguale();
 
-        let operaz = document.createElement("span");
-        operaz.id = "operaz";
-        operaz.innerText = op;
+            let operaz = document.createElement("span");
+            operaz.id = "operaz";
+            operaz.innerText = op;
 
-        display.appendChild(operaz);
-        calcolo.operazione = op;
+            display.appendChild(operaz);
+            calcolo.operazione = op;
 
-        document.getElementById("cancella").innerText = "AC";
-        document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
-        document.getElementById("cancella").addEventListener("click", elimina);
-    }*/
+            document.getElementById("cancella").innerText = "AC";
+            document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+            document.getElementById("cancella").addEventListener("click", elimina);
+        }
+    }
 }
 
 function cancella() {
@@ -164,11 +174,11 @@ function percentuale() {
     else if (calcolo.num1 !== null && calcolo.operazione === null) {
         document.getElementById("primo").innerText += "%";
 
-        calcolo.num1 = `${calcolo.num1 / 100}`;
+        calcolo.num1 = `${+calcolo.num1 / 100}`;
     } else {
         document.getElementById("secondo").innerText += "%";
 
-        calcolo.num2 = `${calcolo.num2 / 100}`;
+        calcolo.num2 = `${+calcolo.num2 / 100}`;
     }
 }
 
@@ -212,9 +222,73 @@ function cambioSegno() {
 }
 
 function virgola() {
-    
+    if (calcolo.num1 === null || (calcolo.operazione !== null && calcolo.num2 === null)) {
+        return;
+    }
+    else if (calcolo.num1 !== null && calcolo.operazione === null) {
+        if (calcolo.num1.indexOf(",") === -1) {
+            document.getElementById("primo").innerText += ",";
+
+            calcolo.num1 += ",";
+        }
+        else {
+            return;
+        }
+    } else {
+        if (calcolo.num2.indexOf(",") === -1) {
+            document.getElementById("secondo").innerText += ",";
+
+            calcolo.num2 += ",";
+        }
+        else {
+            return;
+        }
+    }
 }
 
 function uguale() {
+    if (calcolo.num1 === null || calcolo.operazione === null || calcolo.num2 === null) {
+        return;
+    }
+    else {
+        if (calcolo.num2.indexOf(",") === (calcolo.num2.length - 1)) {
+            return;
+        }
+        else {
+            display.replaceChildren();
 
+            let n1 = +calcolo.num1;
+            let n2 = +calcolo.num2;
+            let ris = 0;
+
+            switch (calcolo.operazione) {
+                case "/":
+                    ris = n1 / n2;
+                    break;
+                case "*":
+                    ris = n1 * n2;
+                    break;
+                case "-":
+                    ris = n1 - n2;
+                    break;
+                case "+":
+                    ris = n1 + n2;
+                    break;
+            }
+
+            let primo = document.createElement("span");
+            primo.id = "primo";
+            primo.innerText = ris;
+
+            display.appendChild(primo);
+
+            calcolo.num1 = `${ris}`;
+            calcolo.operazione = null;
+            calcolo.num2 = null;
+
+            document.getElementById("cancella").innerText = "AC";
+            document.getElementById("cancella").removeEventListener("click", eliminaSecondo);
+            document.getElementById("cancella").addEventListener("click", elimina);
+        }
+    }
 }
